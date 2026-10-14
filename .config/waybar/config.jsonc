@@ -1,0 +1,233 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 0,
+  "height": 26,
+  "border-radius": 25,
+  "margin-right": 10,
+  "margin-left": 10,
+  "margin-top": 2,
+  "modules-left": [
+    "custom/omarchy",
+    "hyprland/workspaces",
+    "group/media"
+  ],
+  "modules-center": [
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "group/tray-expander",
+    "group/ctl",
+    "clock"
+  ],
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{id}",
+  },
+  "custom/omarchy": {
+    "format": " ",
+    "on-click": "rofi -show drun",
+    "on-click-right": "xdg-terminal-exec",
+    "tooltip-format": "Application Launcher"
+  },
+  "cpu": {
+    "interval": 2,
+    "format": "󰍛 {usage}%",
+    "on-click": "kitty -e htop"
+  },
+  "clock": {
+    "format": "  {:%I:%M %p}",
+    "format-alt": "{:%A  %e %B}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "network": {
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "kitty -e nmtui"
+  },
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-discharging": "{icon}",
+    "format-charging": "{icon}",
+    "format-plugged": "",
+    "format-icons": {
+      "charging": [
+        "󰢜",
+        "󰂆",
+        "󰂇",
+        "󰂈",
+        "󰢝",
+        "󰂉",
+        "󰢞",
+        "󰂊",
+        "󰂋",
+        "󰂅"
+      ],
+      "default": [
+        "󰁺",
+        "󰁻",
+        "󰁼",
+        "󰁽",
+        "󰁾",
+        "󰁿",
+        "󰂀",
+        "󰂁",
+        "󰂂",
+        "󰁹"
+      ]
+    },
+    "format-full": "󰂅",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "interval": 5,
+    "on-click": "omarchy-menu power",
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "format-no-controller": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "kitty -e bluetui"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "on-click": "pavucontrol",
+    "on-click-right": "pamixer -t",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "",
+    "format-icons": {
+      "default": [
+        "",
+        " ",
+        " "
+      ]
+    }
+  },
+
+  "tray": {
+    "icon-size": 12,
+    "spacing": 4
+  },
+  "group/media": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 300,
+      "children-class": "media-child",
+      "transition-left-to-right": true
+    },
+    "modules": [
+      "custom/media-title",
+      "custom/media-prev",
+      "custom/media-play",
+      "custom/media-next"
+    ]
+  },
+  "custom/media-title": {
+    "format": "󰎆  {}",
+    "return-type": "json",
+    "escape": true,
+    "exec": "~/.config/waybar/media.sh",
+    "interval": 1,
+    "on-click-right": "~/.config/waybar/scripts/rofi-media.sh"
+  },
+  "custom/media-play": {
+    "format": "{}",
+    "return-type": "json",
+    "exec": "playerctl metadata --format '{\"text\": \"{{status}}\"}' --follow 2>/dev/null | sed 's/Playing/󰏤/g;s/Paused/󰐊/g;s/Stopped/󰐊/g' --unbuffered",
+    "on-click": "playerctl play-pause"
+  },
+  "custom/media-prev": {
+    "format": "󰒮",
+    "on-click": "playerctl previous"
+  },
+  "custom/media-next": {
+    "format": "󰒭",
+    "on-click": "playerctl next"
+  },
+  "custom/separator#blank": {
+    "format": " ",
+    "interval": "once",
+    "tooltip": false
+  },
+  "custom/idle-indicator": {
+    "on-click": "omarchy-toggle-idle",
+    "exec": "$OMARCHY_PATH/default/waybar/indicators/idle.sh",
+    "signal": 9,
+    "return-type": "json"
+  },
+  "custom/notification-silencing-indicator": {
+    "on-click": "omarchy-toggle-notification-silencing",
+    "exec": "$OMARCHY_PATH/default/waybar/indicators/notification-silencing.sh",
+    "signal": 10,
+    "return-type": "json"
+  },
+  "custom/lock": {
+    "format": " ",
+    "tooltip": false,
+    "on-click": "hyprlock"
+  },
+  "hyprland/window": {
+    "format": "{title} - {class}",
+    "max-length": 25,
+    "rewrite": {
+      " - ": "",
+      "(.*?) - Chromium - chromium": "   $1 ",
+      "(.*chrome)...(.*)": "   $1 ",
+      "(.*) - Obsidian - .* - obsidian": "   $1 ",
+      "(.*nvim)...(.*)": "   $2 ",
+      "(.*code) - (.*)": " 󰨞  $1 ",
+      "^.*btop( .*|$)": " 󰧨 BTOP $1 ",
+      "^.*unimatrix( .*|$)": " 󰘨 MATRIX $1 ",
+      "(.*) - Spotify": "  $1 ",
+      "(.*) - com.mitchellh.ghostty": " 󰊠 $1 ",
+      "(.*) - Alacritty": "   $1 ",
+      "(.*) - kitty": "   $1 ",
+      "(.*) - BeeperTexts": " 󰻞  $1 ",
+      "(.*Discord)...(.*).. (.*)": "   $2 ",
+      "(.*) - org.gnome.Nautilus": " 󰉓  $1 ",
+      "(.*) - fish": "   [$1] ",
+      "(.*Steam)...(.*)": "   $1",
+      "(.*imv)...(.*).. (.*)": "   $2",
+      "(.*) - com.obsproject.Studio": "  $1 "
+    }
+  },
+  "group/ctl": {
+    "orientation": "inherit",
+    "modules": [
+      "custom/screenrecording-indicator",
+      "custom/idle-indicator",
+      "custom/notification-silencing-indicator",
+      "custom/update",
+      "custom/separator#blank",
+      "bluetooth",
+      "network",
+      "pulseaudio",
+      "cpu",
+      "battery"
+    ]
+  },
+  "custom/bt": {
+    "format": ""
+  }
+}

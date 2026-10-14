@@ -1,0 +1,12 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Cache and temporary runtime files
+cache/
+*.log
+*.tmp
+
+# Secrets and local environments
+.env
+secrets/
